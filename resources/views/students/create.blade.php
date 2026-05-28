@@ -63,59 +63,60 @@
     <h2 class="mb-3" style="font-family: 'Space Grotesk', sans-serif;">Add Student</h2>
     <p class="field-hint mb-4">Create a student record and login account with a balanced, clean form layout.</p>
 
-    <div class="form-card p-4 p-md-5" id="student-create-panel" data-store-url="{{ route('admin.students.store') }}" data-redirect-url="{{ route('admin.students.index') }}">
+    <form class="form-card p-4 p-md-5" id="student-create-panel" action="{{ route('admin.students.store') }}" method="POST" data-normal-submit="true" data-store-url="{{ route('admin.students.store') }}" data-redirect-url="{{ route('admin.students.index') }}">
+        @csrf
         <div class="row g-4">
             <div class="col-md-6">
                 <label class="form-label" for="student_first_name">First Name</label>
-                <input type="text" id="student_first_name" value="{{ old('first_name') }}" class="form-control">
+                <input type="text" id="student_first_name" name="first_name" value="{{ old('first_name') }}" class="form-control">
                 <small class="text-danger" data-error-for="first_name">@error('first_name'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_last_name">Last Name</label>
-                <input type="text" id="student_last_name" value="{{ old('last_name') }}" class="form-control">
+                <input type="text" id="student_last_name" name="last_name" value="{{ old('last_name') }}" class="form-control">
                 <small class="text-danger" data-error-for="last_name">@error('last_name'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-4">
                 <label class="form-label" for="student_age">Age</label>
-                <input type="number" id="student_age" value="{{ old('age') }}" class="form-control">
+                <input type="number" id="student_age" name="age" value="{{ old('age') }}" class="form-control">
                 <small class="text-danger" data-error-for="age">@error('age'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-8">
                 <label class="form-label" for="student_address">Address</label>
-                <input type="text" id="student_address" value="{{ old('address') }}" class="form-control">
+                <input type="text" id="student_address" name="address" value="{{ old('address') }}" class="form-control">
                 <small class="text-danger" data-error-for="address">@error('address'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_contact_number">Contact Number</label>
-                <input type="text" id="student_contact_number" value="{{ old('contact_number') }}" class="form-control">
+                <input type="text" id="student_contact_number" name="contact_number" value="{{ old('contact_number') }}" class="form-control">
                 <small class="text-danger" data-error-for="contact_number">@error('contact_number'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_email">Email</label>
-                <input type="email" id="student_email" value="{{ old('email') }}" class="form-control">
+                <input type="email" id="student_email" name="email" value="{{ old('email') }}" class="form-control">
                 <small class="text-danger" data-error-for="email">@error('email'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_username">Username</label>
-                <input type="text" id="student_username" value="{{ old('username') }}" class="form-control">
+                <input type="text" id="student_username" name="username" value="{{ old('username') }}" class="form-control">
                 <small class="text-danger" data-error-for="username">@error('username'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_password">Password</label>
-                <input type="password" id="student_password" class="form-control">
+                <input type="password" id="student_password" name="password" class="form-control">
                 <small class="text-danger" data-error-for="password">@error('password'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_degree_id">Degree</label>
-                <select id="student_degree_id" class="form-select">
+                <select id="student_degree_id" name="degree_id" class="form-select">
                     <option value="">-- Select Degree --</option>
                     @foreach($degrees as $degree)
                         <option value="{{ $degree->id }}" {{ old('degree_id') == $degree->id ? 'selected' : '' }}>
@@ -128,7 +129,7 @@
         </div>
 
         <div class="d-flex gap-2 flex-wrap mt-4">
-            <button type="button" id="saveStudent" class="btn btn-lavender">Save Student</button>
+            <button type="submit" id="saveStudent" class="btn btn-lavender">Save Student</button>
             <a href="{{ route('admin.students.index') }}" class="btn btn-back-soft">Back</a>
         </div>
 
@@ -141,7 +142,7 @@
         @else
             <div class="alert alert-danger rounded-4 mt-4 d-none" id="student-create-errors"></div>
         @endif
-    </div>
+    </form>
 </div>
 
 @endsection

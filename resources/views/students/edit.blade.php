@@ -68,52 +68,54 @@
     <h2 class="mb-3" style="font-family: 'Space Grotesk', sans-serif;">Edit Student</h2>
     <p class="field-hint mb-4">Update the student record using the same clean, balanced layout as the create form.</p>
 
-    <div class="form-card p-4 p-md-5" id="student-edit-panel" data-update-url="{{ route($studentUpdateRoute, $student->id) }}" data-redirect-url="{{ route($studentIndexRoute) }}">
+    <form class="form-card p-4 p-md-5" id="student-edit-panel" action="{{ route($studentUpdateRoute, $student->id) }}" method="POST" data-update-url="{{ route($studentUpdateRoute, $student->id) }}" data-redirect-url="{{ route($studentIndexRoute) }}">
+        @csrf
+        @method('PUT')
         <input type="hidden" id="student_id" value="{{ $student->id }}">
 
         <div class="row g-4">
             <div class="col-md-6">
                 <label class="form-label" for="student_edit_first_name">First Name</label>
-                <input type="text" id="student_edit_first_name" value="{{ $student->first_name }}" class="form-control">
+                <input type="text" id="student_edit_first_name" name="first_name" value="{{ old('first_name', $student->first_name) }}" class="form-control">
                 <small class="text-danger" data-error-for="first_name"></small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_edit_last_name">Last Name</label>
-                <input type="text" id="student_edit_last_name" value="{{ $student->last_name }}" class="form-control">
+                <input type="text" id="student_edit_last_name" name="last_name" value="{{ old('last_name', $student->last_name) }}" class="form-control">
                 <small class="text-danger" data-error-for="last_name"></small>
             </div>
 
             <div class="col-md-4">
                 <label class="form-label" for="student_edit_age">Age</label>
-                <input type="number" id="student_edit_age" value="{{ $student->age }}" class="form-control">
+                <input type="number" id="student_edit_age" name="age" value="{{ old('age', $student->age) }}" class="form-control">
                 <small class="text-danger" data-error-for="age"></small>
             </div>
 
             <div class="col-md-8">
                 <label class="form-label" for="student_edit_address">Address</label>
-                <input type="text" id="student_edit_address" value="{{ $student->address }}" class="form-control">
+                <input type="text" id="student_edit_address" name="address" value="{{ old('address', $student->address) }}" class="form-control">
                 <small class="text-danger" data-error-for="address"></small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_edit_contact_number">Contact Number</label>
-                <input type="text" id="student_edit_contact_number" value="{{ $student->contact_number }}" class="form-control">
+                <input type="text" id="student_edit_contact_number" name="contact_number" value="{{ old('contact_number', $student->contact_number) }}" class="form-control">
                 <small class="text-danger" data-error-for="contact_number"></small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_edit_email">Email</label>
-                <input type="email" id="student_edit_email" value="{{ $student->email }}" class="form-control">
+                <input type="email" id="student_edit_email" name="email" value="{{ old('email', $student->email) }}" class="form-control">
                 <small class="text-danger" data-error-for="email"></small>
             </div>
 
             <div class="col-md-6">
                 <label class="form-label" for="student_edit_degree_id">Degree</label>
-                <select id="student_edit_degree_id" class="form-select" required>
+                <select id="student_edit_degree_id" name="degree_id" class="form-select" required>
                     @foreach($degrees as $degree)
                         <option value="{{ $degree->id }}"
-                            {{ $student->degree_id == $degree->id ? 'selected' : '' }}>
+                            {{ old('degree_id', $student->degree_id) == $degree->id ? 'selected' : '' }}>
                             {{ $degree->title }}
                         </option>
                     @endforeach
@@ -123,12 +125,12 @@
         </div>
 
         <div class="d-flex gap-2 flex-wrap mt-4">
-            <button type="button" id="updateStudentBtn" class="btn btn-lavender">Update Student</button>
+            <button type="submit" id="updateStudentBtn" class="btn btn-lavender">Update Student</button>
             <a href="{{ route($studentIndexRoute) }}" class="btn btn-back-soft">Back</a>
         </div>
 
         <div class="alert alert-danger rounded-4 mt-4 d-none" id="student-edit-errors"></div>
-    </div>
+    </form>
 </div>
 
 @endsection

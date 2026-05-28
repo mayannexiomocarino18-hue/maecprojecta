@@ -188,6 +188,10 @@
         startAutoLoad();
 
         window.jQuery('#student-create-panel').on('submit', function (event) {
+            if (window.jQuery(this).data('normal-submit')) {
+                return;
+            }
+
             event.preventDefault();
 
             let first_name = window.jQuery('#student_first_name').val();
