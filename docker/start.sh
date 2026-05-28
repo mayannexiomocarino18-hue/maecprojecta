@@ -73,6 +73,10 @@ fi
 
 php artisan config:clear
 php artisan cache:clear
-php artisan migrate --force
-php artisan db:seed --class=AdminUserAccountSeeder --force
-php artisan serve --host=0.0.0.0 --port="${PORT:-10000}"
+
+(
+    echo "Running database migrations and admin seeder in the background..."
+    php artisan migrate --force && php artisan db:seed --class=AdminUserAccountSeeder --force
+) &
+
+exec php artisan serve --host=0.0.0.0 --port="${PORT:-10000}"
