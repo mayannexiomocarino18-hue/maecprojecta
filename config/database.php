@@ -46,10 +46,10 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL') ?: env('DATABASE_URL') ?: env('MYSQL_URL') ?: env('MYSQL_PUBLIC_URL'),
-            'host' => env('DB_HOST') ?: env('MYSQLHOST', '127.0.0.1'),
+            'host' => env('DB_HOST') ?: env('MYSQLHOST'),
             'port' => env('DB_PORT') ?: env('MYSQLPORT', '3306'),
-            'database' => env('DB_DATABASE') ?: env('MYSQLDATABASE', 'laravel'),
-            'username' => env('DB_USERNAME') ?: env('MYSQLUSER', 'root'),
+            'database' => env('DB_DATABASE') ?: env('MYSQLDATABASE'),
+            'username' => env('DB_USERNAME') ?: env('MYSQLUSER'),
             'password' => env('DB_PASSWORD') ?: env('MYSQLPASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),

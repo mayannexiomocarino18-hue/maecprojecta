@@ -38,7 +38,7 @@ if [ -z "${DB_PASSWORD:-}" ] && [ -n "${MYSQLPASSWORD:-}" ]; then
     export DB_PASSWORD="$MYSQLPASSWORD"
 fi
 
-if [ -z "${DB_HOST:-}" ] && [ -n "${DB_URL:-}" ]; then
+if { [ -z "${DB_HOST:-}" ] || [ "${DB_HOST:-}" = "127.0.0.1" ] || [ "${DB_HOST:-}" = "localhost" ]; } && [ -n "${DB_URL:-}" ]; then
     eval "$(php -r '
         $url = getenv("DB_URL");
         $parts = parse_url($url);
@@ -70,6 +70,8 @@ fi
 if [ "${DB_CONNECTION:-mysql}" = "mysql" ] && { [ -z "${DB_HOST:-}" ] || [ -z "${DB_DATABASE:-}" ] || [ -z "${DB_USERNAME:-}" ]; }; then
     echo "Missing MySQL environment variables. Set DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, and DB_PASSWORD in Render, or connect Railway MYSQLHOST/MYSQLPORT/MYSQLDATABASE/MYSQLUSER/MYSQLPASSWORD."
 fi
+
+echo "Database runtime config: connection=${DB_CONNECTION:-missing}, host=${DB_HOST:-missing}, port=${DB_PORT:-missing}, database=${DB_DATABASE:-missing}, username=${DB_USERNAME:-missing}, db_url_set=$([ -n "${DB_URL:-}" ] && echo yes || echo no)"
 
 php artisan config:clear
 php artisan cache:clear
