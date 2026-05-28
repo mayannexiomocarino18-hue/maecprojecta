@@ -32,7 +32,9 @@ class DegreeController extends Controller
             return response()->json($degree);
         }
 
-        return redirect()->route($this->indexRoute());
+        return redirect()
+            ->route($this->indexRoute())
+            ->with('message', 'Degree added successfully.');
     }
 
     public function show($id)

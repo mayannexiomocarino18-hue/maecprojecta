@@ -55,20 +55,21 @@
     <div class="section-eyebrow">Admin Portal</div>
     <h2 class="mb-3" style="font-family: 'Space Grotesk', sans-serif;">Add Degree</h2>
 
-    <div class="degree-form-card p-4 p-md-5" id="degree-create-panel" data-store-url="{{ route('admin.degrees.store') }}" data-redirect-url="{{ route('admin.degrees.index') }}">
+    <form class="degree-form-card p-4 p-md-5" id="degree-create-panel" action="{{ route('admin.degrees.store') }}" method="POST" data-store-url="{{ route('admin.degrees.store') }}" data-redirect-url="{{ route('admin.degrees.index') }}">
+        @csrf
         <div class="mb-3">
             <label class="degree-form-label" for="degree_title">Degree Name</label>
-            <input type="text" id="degree_title" class="form-control degree-form-input" placeholder="Enter Degree (e.g. BSIT)">
-            <small class="text-danger" data-error-for="title"></small>
+            <input type="text" id="degree_title" name="title" value="{{ old('title') }}" class="form-control degree-form-input @error('title') field-error @enderror" placeholder="Enter Degree (e.g. BSIT)">
+            <small class="text-danger" data-error-for="title">@error('title') {{ $message }} @enderror</small>
         </div>
 
         <div class="d-flex gap-2 flex-wrap mt-4">
-            <button type="button" id="saveDegree" class="btn btn-lavender">Save Degree</button>
+            <button type="submit" id="saveDegree" class="btn btn-lavender">Save Degree</button>
             <a href="{{ route('admin.degrees.index') }}" class="btn btn-back-soft">Back</a>
         </div>
 
         <div class="alert alert-danger rounded-4 mt-4 d-none" id="degree-create-errors"></div>
-    </div>
+    </form>
 </div>
 
 @endsection

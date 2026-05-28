@@ -348,7 +348,9 @@ import './bootstrap';
             });
         });
 
-        window.jQuery('#saveDegree').click(function () {
+        window.jQuery('#saveDegree').click(function (event) {
+            event.preventDefault();
+
             let title = window.jQuery('#degree_title').val();
             let panel = '#degree-create-panel';
             let errorBox = '#degree-create-errors';
