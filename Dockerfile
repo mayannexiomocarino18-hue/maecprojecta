@@ -24,4 +24,4 @@ RUN chmod -R 777 storage bootstrap/cache
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan config:clear && php artisan cache:clear && php artisan migrate --force && php artisan db:seed --class=AdminUserAccountSeeder --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["sh", "-c", "export APP_KEY=\"${APP_KEY:-$(php -r 'echo \"base64:\".base64_encode(random_bytes(32));')}\" && export APP_URL=\"${APP_URL:-https://maecprojecta.onrender.com}\" && export LOG_CHANNEL=\"${LOG_CHANNEL:-stderr}\" && php artisan config:clear && php artisan cache:clear && php artisan migrate --force && php artisan db:seed --class=AdminUserAccountSeeder --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
