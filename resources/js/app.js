@@ -189,7 +189,9 @@ import './bootstrap';
 
         startAutoLoad();
 
-        window.jQuery('#saveStudent').click(function () {
+        window.jQuery('#student-create-panel').on('submit', function (event) {
+            event.preventDefault();
+
             let first_name = window.jQuery('#student_first_name').val();
             let last_name = window.jQuery('#student_last_name').val();
             let age = window.jQuery('#student_age').val();
@@ -205,7 +207,7 @@ import './bootstrap';
             let redirectUrl = window.jQuery(panel).data('redirect-url');
 
             resetErrors(panel, errorBox);
-            window.jQuery(this).prop('disabled', true);
+            window.jQuery('#saveStudent').prop('disabled', true);
 
             window.jQuery.ajax({
                 url: storeUrl,
@@ -247,7 +249,9 @@ import './bootstrap';
             });
         });
 
-        window.jQuery('#updateStudentBtn').click(function () {
+        window.jQuery('#student-edit-panel').on('submit', function (event) {
+            event.preventDefault();
+
             let id = window.jQuery('#student_id').val();
             let first_name = window.jQuery('#student_edit_first_name').val();
             let last_name = window.jQuery('#student_edit_last_name').val();
@@ -262,7 +266,7 @@ import './bootstrap';
             let redirectUrl = window.jQuery(panel).data('redirect-url');
 
             resetErrors(panel, errorBox);
-            window.jQuery(this).prop('disabled', true);
+            window.jQuery('#updateStudentBtn').prop('disabled', true);
 
             window.jQuery.ajax({
                 url: updateUrl || ('/students/' + id),
@@ -302,7 +306,9 @@ import './bootstrap';
             });
         });
 
-        window.jQuery('#saveTeacher').click(function () {
+        window.jQuery('#teacher-create-panel').on('submit', function (event) {
+            event.preventDefault();
+
             let username = window.jQuery('#teacher_username').val();
             let email = window.jQuery('#teacher_email').val();
             let password = window.jQuery('#teacher_password').val();
@@ -312,7 +318,7 @@ import './bootstrap';
             let redirectUrl = window.jQuery(panel).data('redirect-url');
 
             resetErrors(panel, errorBox);
-            window.jQuery(this).prop('disabled', true);
+            window.jQuery('#saveTeacher').prop('disabled', true);
 
             window.jQuery.ajax({
                 url: storeUrl,
@@ -348,7 +354,7 @@ import './bootstrap';
             });
         });
 
-        window.jQuery('#saveDegree').click(function (event) {
+        window.jQuery('#degree-create-panel').on('submit', function (event) {
             event.preventDefault();
 
             let title = window.jQuery('#degree_title').val();
@@ -358,7 +364,7 @@ import './bootstrap';
             let redirectUrl = window.jQuery(panel).data('redirect-url');
 
             resetErrors(panel, errorBox);
-            window.jQuery(this).prop('disabled', true);
+            window.jQuery('#saveDegree').prop('disabled', true);
 
             window.jQuery.ajax({
                 url: storeUrl,
@@ -392,7 +398,9 @@ import './bootstrap';
             });
         });
 
-        window.jQuery('#updateDegreeBtn').click(function () {
+        window.jQuery('#degree-edit-panel').on('submit', function (event) {
+            event.preventDefault();
+
             let id = window.jQuery('#degree_id').val();
             let title = window.jQuery('#degree_edit_title').val();
             let panel = '#degree-edit-panel';
@@ -401,7 +409,7 @@ import './bootstrap';
             let redirectUrl = window.jQuery(panel).data('redirect-url');
 
             resetErrors(panel, errorBox);
-            window.jQuery(this).prop('disabled', true);
+            window.jQuery('#updateDegreeBtn').prop('disabled', true);
 
             window.jQuery.ajax({
                 url: updateUrl || ('/degrees/' + id),

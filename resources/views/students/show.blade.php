@@ -18,7 +18,7 @@
 <p><strong>Contact Number:</strong> {{ $student->contact_number }}</p>
 <p><strong>Age:</strong> {{ $student->age }}</p>
 <p><strong>Address:</strong> {{ $student->address }}</p>
-<p><strong>Degree:</strong> {{ $student->degree->title }}</p>
+<p><strong>Degree:</strong> {{ optional($student->degree)->title ?? 'No degree assigned' }}</p>
 
 </div>
 

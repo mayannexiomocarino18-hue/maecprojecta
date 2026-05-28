@@ -49,7 +49,7 @@
             <td>{{ $student->first_name }} {{ $student->last_name }}</td>
             <td>{{ $student->email }}</td>
             <td>{{ $student->contact_number }}</td>
-            <td>{{ $student->degree->title }}</td>
+            <td>{{ optional($student->degree)->title ?? 'No degree assigned' }}</td>
             @if(session('user_role') === 'admin')
                 <td>
                     <a href="{{ route('admin.students.show',$student->id) }}" class="btn btn-info btn-sm">View</a>
