@@ -10,6 +10,14 @@ if [ -z "${DB_URL:-}" ] && [ -n "${DATABASE_URL:-}" ]; then
     export DB_URL="$DATABASE_URL"
 fi
 
+if [ -z "${DB_URL:-}" ] && [ -n "${MYSQL_URL:-}" ]; then
+    export DB_URL="$MYSQL_URL"
+fi
+
+if [ -z "${DB_URL:-}" ] && [ -n "${MYSQL_PUBLIC_URL:-}" ]; then
+    export DB_URL="$MYSQL_PUBLIC_URL"
+fi
+
 if [ -z "${DB_HOST:-}" ] && [ -n "${MYSQLHOST:-}" ]; then
     export DB_HOST="$MYSQLHOST"
 fi
@@ -30,9 +38,9 @@ if [ -z "${DB_PASSWORD:-}" ] && [ -n "${MYSQLPASSWORD:-}" ]; then
     export DB_PASSWORD="$MYSQLPASSWORD"
 fi
 
-if [ -z "${DB_HOST:-}" ] && [ -n "${DATABASE_URL:-}" ]; then
+if [ -z "${DB_HOST:-}" ] && [ -n "${DB_URL:-}" ]; then
     eval "$(php -r '
-        $url = getenv("DATABASE_URL");
+        $url = getenv("DB_URL");
         $parts = parse_url($url);
 
         if (! is_array($parts)) {
