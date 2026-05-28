@@ -73,6 +73,43 @@ fi
 
 echo "Database runtime config: connection=${DB_CONNECTION:-missing}, host=${DB_HOST:-missing}, port=${DB_PORT:-missing}, database=${DB_DATABASE:-missing}, username=${DB_USERNAME:-missing}, db_url_set=$([ -n "${DB_URL:-}" ] && echo yes || echo no)"
 
+set_env_value() {
+    key="$1"
+    value="$2"
+
+    if grep -q "^${key}=" .env; then
+        php -r '
+            $file = ".env";
+            $key = $argv[1];
+            $value = $argv[2];
+            $lines = file($file, FILE_IGNORE_NEW_LINES);
+
+            foreach ($lines as &$line) {
+                if (str_starts_with($line, $key."=")) {
+                    $line = $key."=".$value;
+                }
+            }
+
+            file_put_contents($file, implode(PHP_EOL, $lines).PHP_EOL);
+        ' "$key" "$value"
+    else
+        printf '%s=%s\n' "$key" "$value" >> .env
+    fi
+}
+
+set_env_value APP_KEY "${APP_KEY}"
+set_env_value APP_URL "${APP_URL}"
+set_env_value LOG_CHANNEL "${LOG_CHANNEL}"
+set_env_value DB_CONNECTION "${DB_CONNECTION}"
+set_env_value DB_HOST "${DB_HOST:-}"
+set_env_value DB_PORT "${DB_PORT:-3306}"
+set_env_value DB_DATABASE "${DB_DATABASE:-}"
+set_env_value DB_USERNAME "${DB_USERNAME:-}"
+set_env_value DB_PASSWORD "${DB_PASSWORD:-}"
+set_env_value SESSION_DRIVER "${SESSION_DRIVER:-file}"
+set_env_value CACHE_STORE "${CACHE_STORE:-file}"
+set_env_value QUEUE_CONNECTION "${QUEUE_CONNECTION:-sync}"
+
 php artisan config:clear
 php artisan cache:clear
 
