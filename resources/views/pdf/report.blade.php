@@ -55,10 +55,10 @@
             @forelse ($students as $student)
                 <tr>
                     <td>{{ $student->id }}</td>
-                    <td>{{ trim($student->fname . ' ' . $student->lname) }}</td>
+                    <td>{{ trim($student->first_name . ' ' . $student->last_name) }}</td>
                     <td>{{ $student->email }}</td>
-                    <td>{{ $student->contact_no }}</td>
-                    <td>{{ optional($student->degree)->degree_name }}</td>
+                    <td>{{ $student->contact_number }}</td>
+                    <td>{{ optional($student->degree)->title ?? 'No degree assigned' }}</td>
                 </tr>
             @empty
                 <tr>

@@ -3,35 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-
-use Dompdf\Dompdf;
-use Dompdf\Options;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Response;
 
 class ModuleNineController extends Controller
 {
-    public function generatePDF()
+    public function generatePDF(): Response
     {
         $data = [
-        'title' => 'Student Report',
-        'date' => now()->format('F j, Y'),
-        'students' => \App\Models\Student::with('degree')->get(),
-    ];
+            'title' => 'Student Report',
+            'date' => now()->format('F j, Y'),
+            'students' => Student::with('degree')->orderBy('id')->get(),
+        ];
 
-        $html = view('pdf.report', $data)->render();
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('chroot', realpath(base_path('../')));
-
-        $dompdf = new Dompdf($options);
-
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-
-        return response($dompdf->output(), 200)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="student-report.pdf"');
+        return Pdf::loadView('pdf.report', $data)
+            ->setPaper('a4', 'portrait')
+            ->stream('student-report.pdf');
     }
 }
