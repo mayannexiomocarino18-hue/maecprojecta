@@ -309,6 +309,10 @@
         });
 
         window.jQuery('#teacher-create-panel').on('submit', function (event) {
+            if (window.jQuery(this).data('normal-submit')) {
+                return;
+            }
+
             event.preventDefault();
 
             let username = window.jQuery('#teacher_username').val();

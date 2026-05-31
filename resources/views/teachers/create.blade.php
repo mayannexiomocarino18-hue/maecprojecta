@@ -56,29 +56,30 @@
     <h2 class="mb-3" style="font-family: 'Space Grotesk', sans-serif;">Add Teacher Account</h2>
     <p class="field-hint mb-4">Create a teacher login account with a tighter, cleaner form layout.</p>
 
-    <div class="teacher-form-card p-4 p-md-5" id="teacher-create-panel" data-store-url="{{ route('admin.teachers.store') }}" data-redirect-url="{{ route('admin.students.index') }}">
+    <form class="teacher-form-card p-4 p-md-5" id="teacher-create-panel" action="{{ route('admin.teachers.store') }}" method="POST" data-normal-submit="true" data-store-url="{{ route('admin.teachers.store') }}" data-redirect-url="{{ route('admin.students.index') }}">
+        @csrf
         <div class="row g-4">
             <div class="col-12">
                 <label class="teacher-form-label" for="teacher_username">Username</label>
-                <input type="text" id="teacher_username" value="{{ old('username') }}" class="form-control teacher-form-input">
+                <input type="text" id="teacher_username" name="username" value="{{ old('username') }}" class="form-control teacher-form-input">
                 <small class="text-danger" data-error-for="username">@error('username'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-12">
                 <label class="teacher-form-label" for="teacher_email">Email</label>
-                <input type="email" id="teacher_email" value="{{ old('email') }}" class="form-control teacher-form-input">
+                <input type="email" id="teacher_email" name="email" value="{{ old('email') }}" class="form-control teacher-form-input">
                 <small class="text-danger" data-error-for="email">@error('email'){{ $message }}@enderror</small>
             </div>
 
             <div class="col-12">
                 <label class="teacher-form-label" for="teacher_password">Password</label>
-                <input type="password" id="teacher_password" class="form-control teacher-form-input">
+                <input type="password" id="teacher_password" name="password" class="form-control teacher-form-input">
                 <small class="text-danger" data-error-for="password">@error('password'){{ $message }}@enderror</small>
             </div>
         </div>
 
         <div class="d-flex gap-2 flex-wrap mt-4">
-            <button type="button" id="saveTeacher" class="btn btn-lavender">Save Teacher</button>
+            <button type="submit" id="saveTeacher" class="btn btn-lavender">Save Teacher</button>
             <a href="{{ route('admin.students.index') }}" class="btn btn-back-soft">Back</a>
         </div>
 
@@ -91,6 +92,6 @@
         @else
             <div class="alert alert-danger rounded-4 mt-4 d-none" id="teacher-create-errors"></div>
         @endif
-    </div>
+    </form>
 </div>
 @endsection
